@@ -16,6 +16,11 @@ nodes:
   - containerPort: 443
     hostPort: 443
     protocol: TCP
+  extraMounts:
+  - hostPath: ./kind-pvc-hostpath.yaml
+    containerPath: /kind/manifests/default-storage.yaml
+  - hostPath: /tmp/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: control-plane
   kubeadmConfigPatches:
   - |
@@ -30,6 +35,11 @@ nodes:
   - containerPort: 443
     hostPort: 443
     protocol: TCP
+  extraMounts:
+  - hostPath: ./kind-pvc-hostpath.yaml
+    containerPath: /kind/manifests/default-storage.yaml
+  - hostPath: /tmp/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: control-plane
   kubeadmConfigPatches:
   - |
@@ -44,6 +54,20 @@ nodes:
   - containerPort: 443
     hostPort: 443
     protocol: TCP
+  extraMounts:
+  - hostPath: ./kind-pvc-hostpath.yaml
+    containerPath: /kind/manifests/default-storage.yaml
+  - hostPath: /tmp/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: worker
+  extraMounts:
+  - hostPath: /tmp/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: worker
+  extraMounts:
+  - hostPath: /tmp/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: worker
+  extraMounts:
+  - hostPath: /tmp/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner

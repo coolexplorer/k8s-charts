@@ -15,5 +15,19 @@ nodes:
   - containerPort: 443
     hostPort: 443
     protocol: TCP
+  - containerPort: 30950
+    hostPort: 30950
+    protocol: TCP
+  extraMounts:
+  - hostPath: ./kind-pvc-hostpath.yaml
+    containerPath: /kind/manifests/default-storage.yaml
+  - hostPath: ./data/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: worker
+  extraMounts:
+  - hostPath: ./data/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
 - role: worker
+  extraMounts:
+  - hostPath: ./data/hostpath-provisioner
+    containerPath: /tmp/hostpath-provisioner
