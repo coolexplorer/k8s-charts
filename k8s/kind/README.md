@@ -68,6 +68,7 @@ $ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/ma
 ```
 
 Waiting until is ready.
+
 ```bash
 $ kubectl wait --namespace ingress-nginx \
   --for=condition=ready pod \
