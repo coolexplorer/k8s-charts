@@ -22,7 +22,7 @@ k3s version latest (default)
 Create a cluster named rancher with just a single server node:
 
 ```bash
-k3d cluster create rancher
+$ k3d cluster create rancher --config single-node-config.yaml
 
 INFO[0000] Prep: Network                                
 INFO[0001] Created network 'k3d-rancher' (6748704ac43c0a7982cf3e6756edcd1166634a1af3b721e91341c1ac7713f3e5) 
@@ -50,13 +50,19 @@ kubectl cluster-info
 Get the new cluster’s connection details merged into your default kubeconfig (usually specified using the KUBECONFIG environment variable or the default path $HOME/.kube/config) and directly switch to the new context:
 
 ```bash
-k3d kubeconfig merge rancher  --kubeconfig-switch-context
+$ k3d kubeconfig merge rancher --kubeconfig-merge-default
 ```
 
 Use the new cluster with kubectl, e.g.:
 
 ```bash
-kubectl get nodes
+$ kubectl get nodes
+```
+
+> It takes some time to run all pods in your cluster, so check the status for a while.
+
+```bash
+$ kubectl get pods --all-namespaces --watch
 ```
 
 ## Cluster deletion

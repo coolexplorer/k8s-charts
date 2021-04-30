@@ -1,0 +1,20 @@
+---
+apiVersion: k3d.io/v1alpha2
+kind: Simple
+name: k3s-default
+servers: 1
+agents: 0
+image: docker.io/rancher/k3s:latest
+kubeAPI: # same as `--api-port rancher.coolexplorer.cf:6445` (where the name would resolve to 127.0.0.1)
+  host: "localhost" # important for the `server` setting in the kubeconfig
+  hostIP: "127.0.0.1" # where the Kubernetes API will be listening on
+  hostPort: "6448" # where the Kubernetes API listening port will be mapped to on your host system
+network: rancher-play
+ports:
+- port: 8080:80 # same as `--port '80:80@loadbalancer'`
+  nodeFilters:
+    - loadbalancer
+- port: 8443:443 # same as `--port '443:443@loadbalancer'`
+  nodeFilters:
+    - loadbalancer
+

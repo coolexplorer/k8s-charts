@@ -43,7 +43,7 @@ The default is for Rancher to generate a CA and uses cert-manager to issue the c
 ```bash
 $ helm install rancher rancher-latest/rancher \
   --namespace cattle-system \
-  --set hostname=rancher.coolexplorer.io \
+  --set hostname=rancher.coolexplorer.cf \
   --set ingress.tls.source=letsEncrypt \
   --set letsEncrypt.email=<your-email-address>
 ```
@@ -63,10 +63,10 @@ To connect the Rancher ui using the host name we added when create Rancher, need
 ```bash
 $ sudo vi /etc/host
 ...
-127.0.0.1   rancher.coolexplorer.io
+127.0.0.1   rancher.coolexplorer.cf
 ...
 ```
 
 ### Connect to Rancher
 
-You can see the Rancher UI when you input `https://rancher.coolexplorer.io:8443`.
+You can see the Rancher UI when you input `https://rancher.coolexplorer.io`.

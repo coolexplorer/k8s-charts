@@ -7,6 +7,8 @@ In this document, I will describe how to create the single node cluster using ki
 I'm going to create the single node cluster config file like below. My playground cluster uses port `80` and `443` for their Ingress so changed the port number for the cluster of Rancher.
 
 ```yaml
+# single-node-config-rancher.yaml
+
 kind: Cluster
 apiVersion: kind.x-k8s.io/v1alpha4
 nodes:
@@ -19,16 +21,20 @@ nodes:
         node-labels: "ingress-ready=true"
   extraPortMappings:
   - containerPort: 80
-    hostPort: 8080
+    hostPort: 80
     protocol: TCP
   - containerPort: 443
-    hostPort: 8443
+    hostPort: 443
     protocol: TCP
   extraMounts:
   - hostPath: ./kind-pvc-hostpath.yaml
     containerPath: /kind/manifests/default-storage.yaml
   - hostPath: ./data/hostpath-provisioner
     containerPath: /tmp/hostpath-provisioner
+```
+
+```bash
+$ kind create cluster --name rancher --config single-node-config-rancher.yaml
 ```
 
 ### Ingress controller - Ingress NGINX
