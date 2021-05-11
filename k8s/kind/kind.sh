@@ -1,14 +1,14 @@
 #!/bin/bash
 
 # kind installation
-brew install kind
+#brew install kind
 
 ### Cluster 
 # cluster installation with default (Latest kubenetes version)
-kind create cluster --config multi-nodes-config.yaml
+#kind create cluster --config multi-nodes-config.yaml
 
 # check the clusters
-kind get clusters
+#kind get clusters
 
 
 ### Ingress

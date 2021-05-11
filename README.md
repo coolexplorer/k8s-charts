@@ -9,7 +9,7 @@ I've been forcusing on the Software Quality Engineering for a long time and need
 ![cluster_architecture](images/cluster-architecture.png)
 
 I will try to add helm charts and setting ways for the service and write down the document. 
-Remember! It would not be exactly same as above architecture diagram because it needs many resource to run simultaneously. Don't worry, you can refer ways to install the local Kubernetes environment with a lightweigh tool named `kind`.
+Remember! It would not be exactly same as above architecture diagram because it needs many resource to run simultaneously. Don't worry, you can refer ways to install the local Kubernetes environment with a lightweigh tool named `kind` and `k3d`.
 
 ## Documents
 |                  Document                      |
@@ -19,3 +19,9 @@ Remember! It would not be exactly same as above architecture diagram because it 
 | [Install Metallb](k8s/metallb/README.md) |
 
 
+## Authors
+- Allen Kim - Initial work - [coolexplorer](https://github.com/coolexplorer)
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
