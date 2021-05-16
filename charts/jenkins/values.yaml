@@ -693,12 +693,12 @@ persistence:
   accessMode: "ReadWriteOnce"
   size: "5Gi"
   volumes:
-  #  - name: nothing
-  #    emptyDir: {}
+  - name: docker-sock
+    hostPath:
+      path: /var/run/docker.sock
   mounts:
-  #  - mountPath: /var/nothing
-  #    name: nothing
-  #    readOnly: true
+  - name: docker-sock
+    mountPath: /var/run/docker.sock
 
 networkPolicy:
   # Enable creation of NetworkPolicy resources.
