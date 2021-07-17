@@ -78,6 +78,8 @@ $ kubectl wait --namespace ingress-nginx \
 
 
 ### Load balancer - Metallb
+If you set up `Kind` on the Mac, need to set up `Virtual Network Interface`. Because officially Mac OS is not allowed to connect the docker network. Please read [my document](../TunTap/README.md).
+
 #### Create metallb namespace
 ```bash
 $ kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/master/manifests/namespace.yaml
