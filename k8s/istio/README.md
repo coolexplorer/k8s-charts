@@ -11,12 +11,12 @@ Istio extends Kubernetes to establish a programmable, application-aware network 
 $ curl -L https://istio.io/downloadIstio | sh -
 
 # Installation with the specific version
-$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.10.0 TARGET_ARCH=x86_64 sh -
+$ curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.10.3 TARGET_ARCH=x86_64 sh -
 ```
 
 2. Move to the folder downloaded
 ```shell
-$ cd istio-1.10.0
+$ cd istio-1.10.3
 ```
 
 3. Add the `istioctl` client
@@ -35,4 +35,12 @@ $ istioctl install --set profile=demo -y
 ✔ Egress gateways installed
 ✔ Ingress gateways installed
 ✔ Installation complete
+```
+
+# Unistallation
+```shell
+$ kubectl delete -f samples/addons
+$ istioctl manifest generate --set profile=demo | kubectl delete --ignore-not-found=true -f -
+$ kubectl delete namespace istio-system
+$ kubectl label namespace default istio-injection-
 ```

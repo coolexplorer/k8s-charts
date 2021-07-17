@@ -8,6 +8,8 @@
 ```shell
 $ brew install tuntap
 ```
+> Please allow the downloaded app like below
+  ![allow-unidentified-app](../../images/tuntap-unidentified-app-allowed.png)
 
 ## Download docker-tuntap-osx
 After installation, you need to download the shell script for virtual network interface installation script - [docker-tuntap-osx](https://github.com/AlmirKadric-Published/docker-tuntap-osx)
@@ -40,23 +42,25 @@ Restarting Docker
 Process restarting, ready to go
 ```
 
-After Docker restarts run ifconfig | grep tap. You should see output like:
+After Docker restarts run `ifconfig | grep tap`. You should see output like:
 
 ```shell
+$ ifconfig | grep tap
 tap1: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
 ```
 
 If a tap1 network interface appears you can now bring it up.
 
 ```shell
-docker-tuntap-osx $ ./sbin/sbin/docker_tap_up.sh
+docker-tuntap-osx $ ./sbin/docker_tap_up.sh
 ```
 
-Enter your password then run ifconfig | grep -A 5 tap.
+Enter your password then run `ifconfig | grep -A 5 tap`.
 
 You should see output like:
 
 ```shell
+$ ifconfig | grep -A 5 tap
 tap1: flags=8843<UP,BROADCAST,RUNNING,SIMPLEX,MULTICAST> mtu 1500
         ether 9a:3e:ca:ad:4b:93 
         inet 10.0.75.1 netmask 0xfffffffc broadcast 10.0.75.3
