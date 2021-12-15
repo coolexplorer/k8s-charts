@@ -1,12 +1,16 @@
 # Virtual Network Interface creation between mac and docker
 
+## Install brew cast
+To install TunTap, it needs to install brew cask. 
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" < /dev/null 2> /dev/null ; brew install caskroom/cask/brew-cask 2> /dev/null
+
 ## Install TunTap Shim
 [TunTap](http://tuntaposx.sourceforge.net/) provides kernel extentions for macOS that allow it to create virtual network interfaces. 
 
 > You can find the message `No longer maintained` but it is still useful for Mac OS 11
 
 ```shell
-$ brew install tuntap
+$ brew install --cask tuntap
 ```
 > Please allow the downloaded app like below
   ![allow-unidentified-app](../../images/tuntap-unidentified-app-allowed.png)
