@@ -1,3 +1,3 @@
 kubectl create secret generic regcred \
-    --from-file=.dockerconfigjson=/home/eass-build/.docker/config.json \
+    --from-file=.dockerconfigjson=/Users/kimseunghwan/.docker/config.json \
     --type=kubernetes.io/dockerconfigjson
