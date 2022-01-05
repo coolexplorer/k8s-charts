@@ -1,0 +1,13 @@
+ENV['VAGRANT_DEFAULT_PROVIDER'] = 'docker'
+
+Vagrant.configure("2") do |config|
+    config.vm.hostname = "k8s-node"
+
+    config.vm.provider "docker" do |docker|
+        docker.image = "coolexplorer/vagrant-docker:ubuntu"
+        docker.remains_running = true
+        docker.has_ssh = true
+        docker.privileged = true
+        docker.volumes = ["/sys/fs/cgroup:/sys/fs/cgroup:ro"]
+    end
+end
