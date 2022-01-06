@@ -5,7 +5,7 @@ metadata:
   labels:
     app: jenkins
 spec:
-  storageClassName: default-storage-class
+  storageClassName: default-local-storage
   accessModes:
     - ReadWriteOnce
   resources:

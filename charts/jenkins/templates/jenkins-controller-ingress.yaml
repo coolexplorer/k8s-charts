@@ -13,7 +13,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": '{{ template "jenkins.name" .}}'
     {{- if .Values.renderHelmLabels }}
-    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    "helm.sh/chart": "{{ template "jenkins.label" .}}"
     {{- end }}
     "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
     "app.kubernetes.io/instance": "{{ .Release.Name }}"
@@ -27,21 +27,24 @@ metadata:
 {{- end }}
   name: {{ template "jenkins.fullname" . }}
 spec:
+{{- if .Values.controller.ingress.ingressClassName }}
+  ingressClassName: {{ .Values.controller.ingress.ingressClassName | quote }}
+{{- end }}
   rules:
   - http:
       paths:
 {{- if empty (.Values.controller.ingress.paths) }}
       - backend:
-{{ if semverCompare ">=1.19-0" $kubeTargetVersion }}
+{{- if semverCompare ">=1.19-0" $kubeTargetVersion }}
           service:
             name: {{ template "jenkins.fullname" . }}
             port:
               number: {{ .Values.controller.servicePort }}
         pathType: ImplementationSpecific
-{{ else }}
+{{- else }}
           serviceName: {{ template "jenkins.fullname" . }}
           servicePort: {{ .Values.controller.servicePort }}
-{{ end }}
+{{- end }}
 {{- if .Values.controller.ingress.path }}
         path: {{ .Values.controller.ingress.path }}
 {{- end -}}
@@ -55,15 +58,16 @@ spec:
   - http:
       paths:
       - backend:
-{{ if semverCompare ">=1.19-0" $kubeTargetVersion }}
+{{- if semverCompare ">=1.19-0" $kubeTargetVersion }}
           service:
             name: {{ template "jenkins.fullname" . }}
             port:
               number: {{ .Values.controller.servicePort }}
-{{ else }}
+        pathType: ImplementationSpecific
+{{- else }}
           serviceName: {{ template "jenkins.fullname" . }}
           servicePort: {{ .Values.controller.servicePort }}
-{{ end }}
+{{- end }}
     host: {{ .Values.controller.ingress.resourceRootUrl | quote }}
 {{- end }}
 {{- if .Values.controller.ingress.tls }}
