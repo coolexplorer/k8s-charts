@@ -12,6 +12,255 @@ Use the following links to reference issues, PRs, and commits prior to v2.6.0.
 The change log until v1.5.7 was auto-generated based on git commits.
 Those entries include a reference to the git commit to be able to get more details.
 
+## 3.10.2
+
+Fix definition of startupProbe when deploying on a Kubernetes cluster < 1.16
+
+## 3.10.1
+
+correct VALUES_SUMMARY.md for installLatestPlugins
+
+## 3.10.0
+
+Update default plugin versions
+
+| plugin                | old version | new version |
+| --------------------- | ----------- | ----------- |
+| kubernetes            | 1.30.11     | 1.31.1      |
+| git                   | 4.10.0      | 4.10.1      |
+| configuration-as-code | 1.54        | 1.55        |
+
+## 3.9.4
+
+Add JAVA_OPTIONS to the README so proxy settings get picked by jenkins-plugin-cli
+
+## 3.9.3
+
+Fix config reload request url when httpsKeystore in use
+
+## 3.9.2
+
+Update Jenkins image and appVersion to jenkins lts release version 2.319.1
+Update following plugins:
+
+* kubernetes:1.30.11
+* git:4.10.0
+* configuration-as-code:1.54
+
+## 3.9.1
+
+Adding `tpl` to `controller.overrideArgs`
+
+## 3.9.0
+
+Added containerSecurityContext
+
+## 3.8.9
+
+Fix mounting of https keystore secret when httpsKeyStore is enabled
+
+## 3.8.8
+
+Update Jenkins image and appVersion to jenkins lts release version 2.303.3
+
+## 3.8.7
+
+Adding `tpl` to `initScripts`
+
+## 3.8.6
+
+Add `controller.tagLabel` to specify the label for the image tag, for example `jdk11` or `alpine`
+
+## 3.8.5
+
+Move jenkins web root outside of home dir
+
+## 3.8.4
+
+Add `controller.initConfigMap` to pass pre-existing `init.groovy.d` ConfigMaps to the controller
+
+## 3.8.3
+
+Update missed reference to jenkins/inbound-agent:4.11-1
+
+## 3.8.2
+
+Update jenkins/inbound-agent:4.11-1
+
+## 3.8.1
+
+Update jenkins/inbound-agent:4.10-3
+
+## 3.8.0
+
+Update kiwigrid/k8s-sidecar:1.14.2
+
+## 3.7.1
+
+Update git and casc plugins versions
+
+## 3.7.0
+
+Added the option to create AWS SecurityGroupPolicy resources
+
+## 3.6.2
+
+Fix httpsKeyStore mount when `controller.httpsKeyStore.enable` is `true`
+
+## 3.6.1
+
+Update Jenkins image and appVersion to jenkins lts release version 2.303.2
+
+
+## 3.6.0
+Support custom agent pod labels
+
+## 3.5.20
+Disallow ingress on port 50000 when agent listener is disabled
+
+## 3.5.19
+Add support for specifying termination-log behaviour for Jenkins controller
+
+## 3.5.18
+Add support for creating a Pod Disruption Budget for Jenkins controller
+
+## 3.5.17
+Update workdingDir to `/home/jenkins/agent`
+
+## 3.5.16
+Update location of icon (wiki.jenkins.io is down)
+
+## 3.5.15
+Add support for adding labels to the Jenkins home Persistent Volume Claim (pvc)
+
+## 3.5.14
+
+* Updated versions of default plugins
+* Use verbose logging during plugin installation
+* download the latest version of all plugin dependencies (Fixes #442)
+
+## 3.5.13
+
+Update Jenkins image and appVersion to jenkins lts release version 2.303.1
+
+## 3.5.12
+
+Added extended documentation for Backup and Restore.
+
+## 3.5.11
+
+Sanitized the Jenkins Label
+
+## 3.5.10
+
+Fixed `controller.customJenkinsLabels` not getting templated into the controller `labelString:` field in JCasC
+
+## 3.5.9
+
+Update Jenkins image and appVersion to jenkins lts release version 2.289.3
+
+
+## 3.5.8
+
+Add parameter `backup.serviceAccount.create` to disable service account creation for backup service and `backup.serviceAccount.name` to allow change of the SA name.
+`backup.annotations` was moved to `backup.serviceAccount.annotations`
+
+## 3.5.7
+
+Enable setting `controller.serviceExternalTrafficPolicy` to set [the standard Service option](https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip). `externalTrafficPolicy` denotes if this Service desires to route external traffic to node-local or cluster-wide endpoints.
+
+## 3.5.6
+
+Add optional `controller.initContainerResources`, if set, it will change resources allocation for init controller, overwise the `controller.resources` will be used
+
+## 3.5.5
+
+Allow to configure nodeUsageMode via `agent.nodeUsageMode`
+
+## 3.5.4
+
+Update tests to work with unittest 0.2.6
+
+## 3.5.3
+
+Update Jenkins image and appVersion to jenkins lts release version 2.289.2
+
+## 3.5.2
+
+Enable setting `controller.installLatestSpecifiedPlugins` to set whether to download the latest dependencies of any plugin that is requested to have the latest version.
+
+## 3.5.1
+Fix activeDeadlineSeconds wrong type bug in jenkins-backup-cronjob template
+
+## 3.5.0
+
+Allow `controller.podAnnotations` to be render as a template
+
+## 3.4.1
+
+Allow showRawYaml for the default agent's pod template to be customized.
+
+## 3.4.0
+
+configAutoReload container updated from `kiwigrid/k8s-sidecar:0.1.275` to `kiwigrid/k8s-sidecar:1.12.2`
+
+## 3.3.23
+
+Make `controller.ingress.resourceRootUrl` compatible with api version networking.k8s.io/v1 on k8s >= 1.19.x
+
+## 3.3.22
+
+Update Jenkins image and appVersion to jenkins lts release version 2.289.1
+
+## 3.3.21
+`persistence.mounts` additionally mount to init container to allow custom CA certificate keystore
+
+## 3.3.18
+Added `controller.overrideArgs` so any cli argument can be passed to the WAR.
+
+## 3.3.17
+Correct docs on disabling plugin installation
+
+## 3.3.16
+Support generating `SecretClaim` resources in order to read secrets from HashiCorp Vault into Kubernetes using `kube-vault-controller`.
+
+## 3.3.15
+Prevent `controller.httpsKeyStore` from improperly being quoted, leading to an invalid location on disk
+
+## 3.3.14
+Correct docs on disabling plugin installation
+
+## 3.3.13
+Update plugins
+
+## 3.3.12
+Add `controller.additionalExistingSecrets` property
+
+## 3.3.11
+Add support for disabling the Agent listener service via `controller.agentListenerEnabled`.
+
+## 3.3.10
+Update Jenkins image and appVersion to jenkins lts release version 2.277.4
+
+## 3.3.9
+* Change helper template so user defined `agent.jenkinsUrl` value will always be used, if set
+* Simplify logic for `jenkinsUrl` and `jenkinsTunnel` generation: always use fully qualified address
+
+## 3.3.8
+Update Jenkins image and appVersion to jenkins lts release version 2.277.3
+
+## 3.3.7
+fix controller-ingress line feed bug
+
+## 3.3.6
+
+Update Git plugin version to v4.7.1
+Update ldap plugin version to v2.5
+
+## 3.3.5
+
+Use tpl function for environment vars. Fixes [https://github.com/jenkinsci/helm-charts/issues/324]
+
 ## 3.3.4
 
 Update Jenkins image and appVersion to jenkins lts release version 2.277.2

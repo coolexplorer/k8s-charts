@@ -7,6 +7,14 @@ Expand the name of the chart.
 {{- end -}}
 
 {{/*
+Expand the label of the chart.
+*/}}
+{{- define "jenkins.label" -}}
+{{- printf "%s-%s" (include "jenkins.name" .) .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
+{{/*
 Allow the release namespace to be overridden for multi-namespace deployments in combined charts.
 */}}
 {{- define "jenkins.namespace" -}}
@@ -109,6 +117,9 @@ jenkins:
     enabled: true
   mode: {{ .Values.controller.executorMode }}
   numExecutors: {{ .Values.controller.numExecutors }}
+  {{- if not (kindIs "invalid" .Values.controller.customJenkinsLabels) }}
+  labelString: "{{ join " " .Values.controller.customJenkinsLabels }}"
+  {{- end }}
   projectNamingStrategy: "standard"
   markupFormatter:
     {{- if .Values.controller.enableRawHtmlMarkupFormatter }}
@@ -123,34 +134,32 @@ jenkins:
       defaultsProviderTemplate: "{{ .Values.agent.defaultsProviderTemplate }}"
       connectTimeout: "{{ .Values.agent.kubernetesConnectTimeout }}"
       readTimeout: "{{ .Values.agent.kubernetesReadTimeout }}"
-      {{- if .Values.agent.websocket }}
-      jenkinsUrl: "http://{{ template "jenkins.fullname" . }}.{{ template "jenkins.namespace" . }}.svc.{{.Values.clusterZone}}:{{.Values.controller.servicePort}}{{ default "" .Values.controller.jenkinsUriPrefix }}"
-      {{- else if .Values.agent.jenkinsUrl }}
+      {{- if .Values.agent.jenkinsUrl }}
       jenkinsUrl: "{{ tpl .Values.agent.jenkinsUrl . }}"
-      {{- else if .Values.agent.namespace }}
-      jenkinsUrl: "http://{{ template "jenkins.fullname" . }}.{{ template "jenkins.namespace" . }}:{{.Values.controller.servicePort}}{{ default "" .Values.controller.jenkinsUriPrefix }}"
       {{- else }}
-      jenkinsUrl: "http://{{ template "jenkins.fullname" . }}:{{.Values.controller.servicePort}}{{ default "" .Values.controller.jenkinsUriPrefix }}"
+      jenkinsUrl: "http://{{ template "jenkins.fullname" . }}.{{ template "jenkins.namespace" . }}.svc.{{.Values.clusterZone}}:{{.Values.controller.servicePort}}{{ default "" .Values.controller.jenkinsUriPrefix }}"
       {{- end }}
       {{- if not .Values.agent.websocket }}
       {{- if .Values.agent.jenkinsTunnel }}
       jenkinsTunnel: "{{ tpl .Values.agent.jenkinsTunnel . }}"
-      {{- else if .Values.agent.namespace }}
-      jenkinsTunnel: "{{ template "jenkins.fullname" . }}-agent.{{ template "jenkins.namespace" . }}:{{ .Values.controller.agentListenerPort }}"
       {{- else }}
-      jenkinsTunnel: "{{ template "jenkins.fullname" . }}-agent:{{ .Values.controller.agentListenerPort }}"
+      jenkinsTunnel: "{{ template "jenkins.fullname" . }}-agent.{{ template "jenkins.namespace" . }}.svc.{{.Values.clusterZone}}:{{ .Values.controller.agentListenerPort }}"
       {{- end }}
       {{- else }}
       webSocket: true
       {{- end }}
       maxRequestsPerHostStr: {{ .Values.agent.maxRequestsPerHostStr | quote }}
-      name: "kubernetes"
+      name: "{{ .Values.controller.cloudName }}"
       namespace: "{{ template "jenkins.agent.namespace" . }}"
       serverUrl: "https://kubernetes.default"
       {{- if .Values.agent.enabled }}
       podLabels:
       - key: "jenkins/{{ .Release.Name }}-{{ .Values.agent.componentName }}"
         value: "true"
+      {{- range $key, $val := .Values.agent.podLabels }}
+      - key: {{ $key | quote }}
+        value: {{ $val | quote }}
+      {{- end }}
       templates:
       {{- include "jenkins.casc.podTemplate" . | nindent 8 }}
     {{- if .Values.additionalAgents }}
@@ -255,9 +264,9 @@ Returns kubernetes pod template configuration as code
     {{- $_ := set $local "first" false }}
   {{- end }}
 {{- end }}
-  nodeUsageMode: "NORMAL"
+  nodeUsageMode: {{ quote .Values.agent.nodeUsageMode }}
   podRetention: {{ .Values.agent.podRetention }}
-  showRawYaml: true
+  showRawYaml: {{ .Values.agent.showRawYaml }}
   serviceAccount: "{{ include "jenkins.serviceAccountAgentName" . }}"
   slaveConnectTimeoutStr: "{{ .Values.agent.connectTimeout }}"
 {{- if .Values.agent.volumes }}
@@ -336,5 +345,38 @@ Create the name of the service account for Jenkins agents to use
     {{ default (printf "%s-%s" (include "jenkins.fullname" .) "agent") .Values.serviceAccountAgent.name }}
 {{- else -}}
     {{ default "default" .Values.serviceAccountAgent.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the name of the service account for Jenkins backup to use
+*/}}
+{{- define "backup.serviceAccountBackupName" -}}
+{{- if .Values.backup.serviceAccount.create -}}
+    {{ default (printf "%s-%s" (include "jenkins.fullname" .) "backup") .Values.backup.serviceAccount.name }}
+{{- else -}}
+    {{ default "default" .Values.backup.serviceAccount.name }}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create a full tag name for controller image
+*/}}
+{{- define "controller.tag" -}}
+{{- if .Values.controller.tagLabel -}}
+    {{- default (printf "%s-%s" .Chart.AppVersion .Values.controller.tagLabel) .Values.controller.tag -}}
+{{- else -}}
+    {{- default .Chart.AppVersion .Values.controller.tag -}}
+{{- end -}}
+{{- end -}}
+
+{{/*
+Create the HTTP port for interacting with the controller
+*/}}
+{{- define "controller.httpPort" -}}
+{{- if .Values.controller.httpsKeyStore.enable -}}
+    {{- .Values.controller.httpsKeyStore.httpPort -}}
+{{- else -}}
+    {{- .Values.controller.targetPort -}}
 {{- end -}}
 {{- end -}}

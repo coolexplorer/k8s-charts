@@ -1,3 +1,4 @@
+{{- if .Values.controller.agentListenerEnabled }}
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,7 +7,7 @@ metadata:
   labels:
     "app.kubernetes.io/name": '{{ template "jenkins.name" .}}'
     {{- if .Values.renderHelmLabels }}
-    "helm.sh/chart": "{{ .Chart.Name }}-{{ .Chart.Version }}"
+    "helm.sh/chart": "{{ template "jenkins.label" .}}"
     {{- end }}
     "app.kubernetes.io/managed-by": "{{ .Release.Service }}"
     "app.kubernetes.io/instance": "{{ .Release.Name }}"
@@ -29,4 +30,5 @@ spec:
   type: {{ .Values.controller.agentListenerServiceType }}
   {{- if and (eq .Values.controller.agentListenerServiceType "LoadBalancer") (.Values.controller.agentListenerLoadBalancerIP) }}
   loadBalancerIP: {{  .Values.controller.agentListenerLoadBalancerIP }}
+  {{- end }}
   {{- end }}
