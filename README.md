@@ -24,4 +24,4 @@ Remember! It would not be exactly same as above architecture diagram because it 
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details
