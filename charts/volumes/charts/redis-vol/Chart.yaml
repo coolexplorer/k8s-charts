@@ -1,0 +1,7 @@
+apiVersion: v2
+name: redis-vol
+version: 0.1.0
+description: redis volume Helm chart
+maintainers:
+  - name: coolexplorer
+    email: corono1004@gmail.com

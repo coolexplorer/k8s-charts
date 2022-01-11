@@ -1,0 +1,4 @@
+global:
+  appName: "redis"
+  namespace: "default"
+  capacity: 1Gi

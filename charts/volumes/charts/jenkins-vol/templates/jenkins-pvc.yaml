@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ .Values.global.appName }}-pvc"
+  namespace: {{ .Values.global.namespace }}
+  labels:
+    app: {{ .Values.global.appName }}
+spec:
+  storageClassName: default-local-storage
+  resources:
+    requests:
+      storage: {{ .Values.global.capacity }}
+  accessModes:
+    - ReadWriteOnce
