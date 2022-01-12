@@ -406,7 +406,7 @@ master:
   service:
     ## @param master.service.type Redis&trade; master service type
     ##
-    type: ClusterIP
+    type: NodePort
     ## @param master.service.port Redis&trade; master service port
     ##
     port: 6379
@@ -414,7 +414,7 @@ master:
     ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#type-nodeport
     ## NOTE: choose port between <30000-32767>
     ##
-    nodePort: ""
+    nodePort: 30379
     ## @param master.service.externalTrafficPolicy Redis&trade; master service external traffic policy
     ## ref: https://kubernetes.io/docs/tasks/access-application-cluster/create-external-load-balancer/#preserving-the-client-source-ip
     ##
