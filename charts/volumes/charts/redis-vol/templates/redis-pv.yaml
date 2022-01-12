@@ -1,19 +1,20 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: jenkins-pv
+  name: "{{ .Values.global.appName }}-pv"
+  namespace: {{ .Values.global.namespace }}
   labels:
-    app: jenkins
+    app: {{ .Values.global.appName }}
 spec:
   capacity:
-    storage: 5Gi
+    storage: {{ .Values.global.capacity }}
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
   persistentVolumeReclaimPolicy: Retain
   storageClassName: default-local-storage
   local:
-    path: /Users/kimseunghwan/pv/jenkins-data
+    path: /Users/kimseunghwan/pv/redis-data
   nodeAffinity:
     required:
       nodeSelectorTerms:

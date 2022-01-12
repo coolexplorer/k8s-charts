@@ -1,0 +1,7 @@
+apiVersion: v2
+name: jenkins-vol
+version: 0.1.0
+description: jenkins volume Helm chart
+maintainers:
+  - name: coolexplorer
+    email: corono1004@gmail.com

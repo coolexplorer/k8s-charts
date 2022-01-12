@@ -1,0 +1,4 @@
+global:
+  appName: "jenkins"
+  namespace: "default"
+  capacity: 5Gi
