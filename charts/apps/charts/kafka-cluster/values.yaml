@@ -17,10 +17,10 @@ cp-zookeeper:
     ## production servers this number should likely be much larger.
     ##
     ## Size for Data dir, where ZooKeeper will store the in-memory database snapshots.
-    dataDirSize: 5Gi
+    dataDirSize: 2Gi
     # dataDirStorageClass: ""
     ## Size for data log dir, which is a dedicated log device to be used, and helps avoid competition between logging and snaphots.
-    dataLogDirSize: 5Gi
+    dataLogDirSize: 2Gi
     # dataLogDirStorageClass: ""
     
   # TODO: find correct security context for user in this zk-image  
@@ -42,7 +42,7 @@ cp-zookeeper:
 ## ------------------------------------------------------
 cp-kafka:
   enabled: true
-  brokers: 1
+  brokers: 3
   image: confluentinc/cp-enterprise-kafka
   imageTag: 6.1.0
   ## Optionally specify an array of imagePullSecrets. Secrets must be manually created in the namespace.
@@ -53,7 +53,7 @@ cp-kafka:
   persistence:
     enabled: true
     # storageClass: ""
-    size: 5Gi
+    size: 2Gi
     disksPerBroker: 1
   resources: {}
   ## If you do want to specify resources, uncomment the following lines, adjust them as necessary,
@@ -66,6 +66,31 @@ cp-kafka:
   #   memory: 128Mi
   securityContext: 
     runAsUser: 0
+  
+  configurationOverrides:
+    "offsets.topic.replication.factor": 3
+    # "default.replication.factor": 3
+    # "min.insync.replicas": 2
+    # "auto.create.topics.enable": false
+
+    ## Options required for external access via NodePort
+    ## ref:
+    ## - http://kafka.apache.org/documentation/#security_configbroker
+    ## - https://cwiki.apache.org/confluence/display/KAFKA/KIP-103%3A+Separation+of+Internal+and+External+traffic
+    ##
+    ## Advertised listeners will use the firstListenerPort value as it's default unless overridden here.
+    ## Setting "advertised.listeners" here appends to "PLAINTEXT://${POD_IP}:9092,"
+    # "advertised.listeners": |-
+    # EXTERNAL://${HOST_IP}:$((31090 + ${KAFKA_BROKER_ID}))
+    "listener.security.protocol.map": |-
+      PLAINTEXT:PLAINTEXT,EXTERNAL:PLAINTEXT
+
+  customEnv: {}
+
+  nodeport:
+    enabled: true
+    servicePort: 19092
+    firstListenerPort: 31090
 
 ## ------------------------------------------------------
 ## Schema Registry
