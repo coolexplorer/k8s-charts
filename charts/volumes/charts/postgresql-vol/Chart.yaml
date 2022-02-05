@@ -1,0 +1,7 @@
+apiVersion: v2
+name: postgresql-vol
+version: 0.1.0
+description: postgresql volume Helm chart
+maintainers:
+  - name: coolexplorer
+    email: corono1004@gmail.com
