@@ -11,9 +11,26 @@ services:
       POSTGRES_USER: coolexplorer
       POSTGRES_PASSWORD: password
       POSTGRES_DB: auth
+    networks: 
+      - spring-micro
 
   adminer:
     image: adminer
     restart: always
     ports:
       - "8089:8080"
+    networks: 
+      - spring-micro
+
+networks:
+  spring-micro:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
+          ip_range: 10.5.0.0/24
+          gateway: 10.5.0.1
+          aux_addresses:
+            db: 10.5.0.4
+            adminer: 10.5.0.5
