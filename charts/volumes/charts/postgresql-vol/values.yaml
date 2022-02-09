@@ -1,0 +1,4 @@
+global:
+  appName: "postgresql"
+  namespace: "default"
+  capacity: 1Gi
