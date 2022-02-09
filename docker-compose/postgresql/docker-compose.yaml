@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  db:
+    image: "postgres:13"
+    ports:
+      - "5432:5432"
+    volumes:
+      - $PWD/pgdata:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: coolexplorer
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - "8089:8080"
