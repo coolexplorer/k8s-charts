@@ -17,4 +17,12 @@ services:
 networks:
   spring-micro:
     driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.5.0.0/16
+          ip_range: 10.5.0.0/24
+          gateway: 10.5.0.1
+          aux_addresses:
+            redis: 10.5.0.6
 
