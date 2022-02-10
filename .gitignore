@@ -1,3 +1,7 @@
 **/.vagrant
 **/data
 **/istio-*
+**/pgdata
+**/redis-data
+**/redis.conf
+**/logs/**
