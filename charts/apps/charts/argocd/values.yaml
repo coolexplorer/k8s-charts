@@ -393,7 +393,7 @@ dex:
     # -- Dex image repository
     repository: ghcr.io/dexidp/dex
     # -- Dex image tag
-    tag: v2.30.0
+    tag: v2.31.0
     # -- Dex imagePullPolicy
     imagePullPolicy: IfNotPresent
   initImage:
