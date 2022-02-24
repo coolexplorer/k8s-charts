@@ -47,7 +47,7 @@ services:
       - spring-micro
 
   kafka:
-    image: "bitnami/kafka:2.5.0"
+    image: "bitnami/kafka:2.8.1"
     ports:
       - "9092:9092"
     environment:
